@@ -1,0 +1,38 @@
+{
+    "audio": {
+        "master_volume": 0.8,
+        "bgm_volume": 0.7,
+        "sfx_volume": 1.0,
+        "voice_volume": 0.9,
+        "ui_volume": 1.0
+    },
+    "display": {
+        "fullscreen": false,
+        "borderless": false,
+        "vsync": true,
+        "resolution_scale": 1.0,
+        "max_fps": 0
+    },
+    "input": {
+        "deadzone": 0.2,
+        "buffer_window": 10
+    },
+    "debug": {
+        "show_fps": false,
+        "log_level": "debug",
+        "enable_console": true,
+        "enable_cheats": true
+    },
+    "locale": "zh_CN",
+    "save": {
+        "auto_save_enabled": true,
+        "auto_save_interval_seconds": 300,
+        "max_slots": 10,
+        "encryption_key": "change-me-in-production"
+    },
+    "game": {
+        "title": "My Game",
+        "start_scene": "res://scenes/main_menu.tscn",
+        "target_fps": 60
+    }
+}
