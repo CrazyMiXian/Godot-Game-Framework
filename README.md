@@ -510,9 +510,9 @@ godot-game-framework/
 
 ### Phase 0 — 项目骨架 (v0.1.0)
 - [x] 项目初始化、目录结构搭建
-- [ ] Godot 4 项目创建（`project.godot`）
-- [ ] `.gitignore` 配置
-- [ ] README.md 完整文档
+- [x] Godot 4 项目创建（`project.godot`）
+- [x] `.gitignore` 配置
+- [x] README.md 完整文档
 
 ### Phase 1 — 核心基础设施 (v0.2.0)
 - [ ] **Core**: GameManager 单例、配置管理、生命周期
@@ -553,7 +553,7 @@ godot-game-framework/
 
 > ⚠️ 框架正在开发中，以下为预期使用方式。
 
-### 安装
+### 安装  
 
 1. **作为 Godot 插件**：
    ```
