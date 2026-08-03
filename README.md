@@ -4,6 +4,8 @@
 
 ---
 
+=目前的readme由ai生成，之后会手动编写=
+
 # 一、项目目标
 
 构建一个适用于 Godot 4 的可复用 Gameplay Runtime Framework。
