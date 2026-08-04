@@ -93,8 +93,8 @@ FSM Buff Ability
 - [x] 4. 写入日志文件 — `user://logs/game_时间戳.log`
 - [x] 5. 自动创建 `logs/` 目录 — `DirAccess.make_dir_recursive_absolute`
 - [x] 6. 保留最近 5 个日志文件 — 启动时自动清理旧文件
-- [ ] 7. `log_level` 支持从 `config.json` 读取（ConfigManager 不存在时默认 `debug`）
-- [ ] 8. `get_recent(n)` 返回最近 N 条日志 — 供 DebugConsole 调用
+- [x] 7. `log_level` 支持从 `config.json` 读取（ConfigManager 不存在时默认 `debug`）
+- [x] 8. `get_recent(n)` 返回最近 N 条日志 — 供 DebugConsole 调用
 - [x] 9. `log_added` 信号 — 实时推送新日志条目
 - [x] 10. ERROR 级别自动 `push_error` — 调试构建中弹出断点
 
@@ -125,7 +125,7 @@ FSM Buff Ability
 >
 > **完成标志**：A 脚本 `EventBus.on("test", f)`，B 脚本 `EventBus.emit("test", {...})`，A 收到回调。
 
-- [ ] 1. `class_name EventBus extends Node` — Autoload
+- [x] 1. `class_name EventBus extends Node` — Autoload
 - [ ] 2. `on(event_name, callable)` → 返回 `int` 监听 ID — 持久监听
 - [ ] 3. `once(event_name, callable)` → 返回 `int` — 触发一次后自动移除
 - [ ] 4. `off(listener_id)` — 通过 ID 取消监听
@@ -144,12 +144,12 @@ FSM Buff Ability
 >
 > **完成标志**：`ConfigManager.get_value("debug.log_level", "debug")` 在 config.json 中写入 `info` 时返回 `"info"`。
 
-- [ ] 1. `class_name ConfigManager extends Node` — Autoload
-- [ ] 2. `initialize()` 加载 `res://config.json` — 文件不存在时用内置默认配置
-- [ ] 3. `get_value("audio.bgm_volume", 0.7)` — 点号分隔路径 + 默认值回退
-- [ ] 4. `get_value` 返回 `Variant` — 调用方自行转换，灵活通用
+- [x] 1. `class_name ConfigManager extends Node` — Autoload
+- [x] 2. `initialize()` 加载 `res://config.json` — 文件不存在时用内置默认配置
+- [x] 3. `get_value("audio.bgm_volume", 0.7)` — 点号分隔路径 + 默认值回退
+- [x] 4. `get_value` 返回 `Variant` — 调用方自行转换，灵活通用
 - [ ] 5. `_default_config()` — 内置默认值，覆盖所有配置项
-- [ ] 6. JSON 解析错误不崩溃 — `JSON.new().parse()` 错误处理
+- [x] 6. JSON 解析错误不崩溃 — `JSON.new().parse()` 错误处理
 
 ---
 

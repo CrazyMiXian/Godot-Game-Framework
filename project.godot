@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+ConfigManager="*uid://dfdrtl6desjar"
 LoggerGlobal="*res://src/debug/logger.gd"
 
 [display]
