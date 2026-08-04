@@ -256,8 +256,14 @@ signal framework_ready()
 ## 游戏即将退出信号 — 用于保存数据、释放资源
 signal game_quitting()
 
+# 暴露 PauseLayer 枚举（定义在 PauseManager 中，这里做别名方便外部引用）
+const PauseLayer := PauseManager.PauseLayer
+
 ## 子系统注册表 — 声明每个子系统的初始化顺序和依赖
 var _subsystems: Array[SubsystemEntry] = []
+
+## 暂停管理器实例
+var _pause_manager: PauseManager
 
 # 内部类（定义在本文件底部或单独文件）
 class SubsystemEntry:
@@ -274,19 +280,35 @@ class SubsystemEntry:
 
 
 func _ready() -> void:
+    print("[GameManager] _ready() 开始 — 当前 Autoload 子节点:")
+    for child in get_tree().root.get_children():
+        print("  └─ %s (%s)" % [child.name, child.get_script().resource_path if child.get_script() else "no_script"])
+
+    # 0. 初始化暂停管理器
+    _pause_manager = PauseManager.new()
+
     # 1. 收集所有 Autoload 作为子系统（除自己）
     _collect_subsystems()
+    print("[GameManager] 收集到 %d 个子系统:" % _subsystems.size())
+    for entry in _subsystems:
+        print("  └─ %s (has initialize: %s)" % [entry.name, entry.node.has_method("initialize")])
 
     # 2. 拓扑排序
     var sorted := _topological_sort(_subsystems)
+    print("[GameManager] 拓扑排序结果 (%d 个):" % sorted.size())
+    for entry in sorted:
+        print("  └─ %s" % entry.name)
 
     # 3. 按顺序调用每个子系统的 initialize()
     for entry in sorted:
         if entry.node.has_method("initialize"):
+            print("[GameManager] → 调用 %s.initialize()" % entry.name)
             entry.node.initialize()
+            print("[GameManager] ← %s.initialize() 完成" % entry.name)
 
     # 4. 发射就绪信号
     framework_ready.emit()
+    print("[GameManager] framework_ready 已发射")
     Logger.info("框架初始化完成", self)
 
 
@@ -311,6 +333,90 @@ func get_subsystem(p_name: String) -> Node:
         if entry.name == p_name:
             return entry.node
     return null
+
+
+# ────────────────────────────────────────
+# 内部方法：收集子系统 & 拓扑排序
+# ────────────────────────────────────────
+
+## 从 Autoload 列表中收集所有子系统节点
+func _collect_subsystems() -> void:
+    # 获取当前场景树 root 的所有子节点（Autoload 都在 root 下）
+    var root := get_tree().root
+    for child in root.get_children():
+        if child == self:
+            continue
+        # 只收集有 initialize() 方法的 Autoload
+        if child.has_method("initialize"):
+            # 默认优先级 0，无依赖
+            _subsystems.append(SubsystemEntry.new(child.name, child, 0, []))
+
+
+## 拓扑排序（Kahn 算法）
+func _topological_sort(entries: Array[SubsystemEntry]) -> Array[SubsystemEntry]:
+    # 构建入度表和图
+    var in_degree: Dictionary = {}
+    var graph: Dictionary = {}  # name → Array[String]（依赖此节点的其他节点）
+    var name_to_entry: Dictionary = {}
+
+    for entry in entries:
+        var n := entry.name
+        if not in_degree.has(n):
+            in_degree[n] = 0
+        if not graph.has(n):
+            graph[n] = []
+        name_to_entry[n] = entry
+
+    for entry in entries:
+        for dep in entry.depends_on:
+            if not graph.has(dep):
+                graph[dep] = []
+            graph[dep].append(entry.name)
+            in_degree[entry.name] = in_degree.get(entry.name, 0) + 1
+
+    # 入度为 0 的节点入队（按 priority 排序以保持稳定顺序）
+    var queue: Array[String] = []
+    for entry in entries:
+        if in_degree.get(entry.name, 0) == 0:
+            queue.append(entry.name)
+    queue.sort_custom(func(a, b): return name_to_entry[a].priority < name_to_entry[b].priority)
+
+    var result: Array[SubsystemEntry] = []
+
+    while not queue.is_empty():
+        var current := queue.pop_front()
+        result.append(name_to_entry[current])
+
+        for neighbor in graph.get(current, []):
+            in_degree[neighbor] = in_degree[neighbor] - 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+                queue.sort_custom(func(a, b): return name_to_entry[a].priority < name_to_entry[b].priority)
+
+    # 检测环
+    if result.size() != entries.size():
+        Logger.warn("子系统依赖图中存在循环依赖！已返回部分排序结果", self)
+
+    return result
+
+
+# ────────────────────────────────────────
+# 暂停管理（代理到内部 PauseManager）
+# ────────────────────────────────────────
+
+## 请求暂停
+func pause(layer: PauseManager.PauseLayer = PauseManager.PauseLayer.GAMEPLAY, source: String = "unknown") -> int:
+    return _pause_manager.pause(layer, source)
+
+
+## 取消暂停
+func unpause(pause_id: int) -> void:
+    _pause_manager.unpause(pause_id)
+
+
+## 判断某层是否被暂停
+func is_layer_paused(layer: PauseManager.PauseLayer) -> bool:
+    return _pause_manager.is_layer_paused(layer)
 ```
 
 **关键实现细节**：
@@ -518,7 +624,7 @@ func is_layer_paused(layer: PauseLayer) -> bool:
 
 ```gdscript
 # UI 面板打开时暂停游戏
-var pause_id = GameManager.pause(PauseLayer.GAMEPLAY, "inventory_ui")
+var pause_id = GameManager.pause(GameManager.PauseLayer.GAMEPLAY, "inventory_ui")
 
 # 关闭时恢复
 GameManager.unpause(pause_id)
@@ -2758,22 +2864,71 @@ enum Level { DEBUG = 0, INFO = 1, WARN = 2, ERROR = 3 }
 ## 最低记录级别
 var min_level: Level = Level.DEBUG
 
-## 日志条目
-var _log: Array[Dictionary] = []
+## 日志存储目录
+const LOG_DIR := "user://logs/"
 
-## 日志文件路径
-var _file_path: String = "user://game.log"
+## 当前日志文件路径（initialize 中自动生成）
+var _file_path: String = ""
+
+## 内存中的日志条目（用于 DebugConsole 等实时查看）
+var _entries: Array[Dictionary] = []
+
+## 最多保留的旧日志文件数（超出自动删除）
+const MAX_LOG_FILES := 5
 
 signal log_added(entry: Dictionary)
 
 
 func initialize() -> void:
-    var config_level: String = ConfigManager.get_value("debug.log_level", "debug")
+    print("[Logger] initialize() 被调用")
+
+    # 读取配置中的最低日志级别（ConfigManager 可能尚未注册，容错处理）
+    var config_level: String = "debug"
+    if Engine.has_singleton("ConfigManager"):
+        config_level = ConfigManager.get_value("debug.log_level", "debug")
+        print("[Logger] 从 ConfigManager 读取 log_level = %s" % config_level)
+    else:
+        print("[Logger] ConfigManager 未注册，使用默认 log_level = debug")
     match config_level:
         "debug": min_level = Level.DEBUG
         "info":  min_level = Level.INFO
         "warn":  min_level = Level.WARN
         "error": min_level = Level.ERROR
+
+    # 自动创建日志目录（递归，中间目录一并创建）
+    print("[Logger] 创建日志目录: %s" % LOG_DIR)
+    var err := DirAccess.make_dir_recursive_absolute(LOG_DIR)
+    if err != OK:
+        push_error("Logger: 无法创建日志目录 %s (错误码: %d)" % [LOG_DIR, err])
+        print("[Logger] ❌ 目录创建失败，错误码: %d" % err)
+        return
+    print("[Logger] ✓ 日志目录就绪")
+
+    # 生成带时间戳的日志文件名，避免每次启动覆盖旧日志
+    var datetime := Time.get_datetime_string_from_system().replace(":", "-")
+    _file_path = LOG_DIR + "game_" + datetime + ".log"
+    print("[Logger] 日志文件路径: %s" % _file_path)
+
+    # 创建当前日志文件并写入启动标记
+    var file := FileAccess.open(_file_path, FileAccess.WRITE)
+    if file:
+        file.store_line("═══════════════════════════════════")
+        file.store_line(" GGF Logger — %s" % Time.get_datetime_string_from_system())
+        file.store_line(" Log level: %s" % Level.keys()[min_level])
+        file.store_line("═══════════════════════════════════")
+        file.close()
+        # 打印绝对路径，方便用户在文件系统中定位
+        print_rich("[color=cyan][Logger] ✓ 日志文件已创建: %s[/color]" % ProjectSettings.globalize_path(_file_path))
+    else:
+        push_error("Logger: 无法创建日志文件 — %s" % _file_path)
+        print("[Logger] ❌ 文件创建失败: %s" % _file_path)
+        return
+
+    # 清理超出保留数量的旧日志
+    _cleanup_old_logs()
+
+    info("日志系统初始化完成，文件: %s" % _file_path, self)
+    print("[Logger] initialize() 全部完成")
 
 
 func debug(message: String, source = null) -> void:
@@ -2801,36 +2956,90 @@ func _log(level: Level, message: String, source) -> void:
         "frame": Engine.get_process_frames(),
     }
 
-    _log.append(entry)
+    _entries.append(entry)
     log_added.emit(entry)
 
-    # 控制台输出
+    # 控制台输出（使用 print_rich 支持颜色）
     var level_str := Level.keys()[level]
     var source_str := "[%s]" % entry.source if not entry.source.is_empty() else ""
     print_rich("[color=gray][%s][/color] [%s] %s%s" % [entry.time, level_str, source_str, " " + message])
 
-    # 写入文件
+    # 写入文件（文件已在 initialize 中创建，此处直接追加）
     _write_to_file(entry)
 
-    # ERROR 级别的断点提示
+    # ERROR 级别在调试构建中断点提示
     if level == Level.ERROR and OS.is_debug_build():
         push_error(message)
 
 
+## 写入失败标记（仅警告一次，避免刷屏）
+var _write_failed_warned: bool = false
+
+
 func _write_to_file(entry: Dictionary) -> void:
+    # 防御：initialize() 未执行或失败导致路径为空
+    if _file_path.is_empty():
+        if not _write_failed_warned:
+            _write_failed_warned = true
+            push_warning("Logger: _file_path 为空，日志文件写入已跳过（initialize() 是否未被调用？）")
+        return
+
+    # 防御：文件可能被外部删除，重新创建
+    if not FileAccess.file_exists(_file_path):
+        var f := FileAccess.open(_file_path, FileAccess.WRITE)
+        if f: f.close()
+
     var file := FileAccess.open(_file_path, FileAccess.READ_WRITE)
     if file == null:
+        if not _write_failed_warned:
+            _write_failed_warned = true
+            push_warning("Logger: 无法打开日志文件进行写入 — %s" % _file_path)
         return
+    _write_failed_warned = false  # 成功后重置，以便将来 IO 恢复时不再误报
     file.seek_end()
     file.store_line("[%s] [%s] %s: %s" % [entry.time, Level.keys()[entry.level], entry.source, entry.message])
     file.close()
 
 
-## 获取最近的日志
+## 清理超出保留数量的旧日志文件
+func _cleanup_old_logs() -> void:
+    var dir := DirAccess.open(LOG_DIR)
+    if dir == null:
+        return
+
+    # 收集所有 .log 文件及其修改时间
+    var log_files: Array[Dictionary] = []
+    dir.list_dir_begin()
+    var file_name := dir.get_next()
+    while not file_name.is_empty():
+        if file_name.ends_with(".log") and not dir.current_is_dir():
+            var full_path := LOG_DIR + file_name
+            log_files.append({
+                "path": full_path,
+                "modified": FileAccess.get_modified_time(full_path),
+            })
+        file_name = dir.get_next()
+    dir.list_dir_end()
+
+    # 按修改时间降序排列（最新的在前）
+    log_files.sort_custom(func(a, b): return a.modified > b.modified)
+
+    # 删除超出 MAX_LOG_FILES 的旧文件
+    for i in range(MAX_LOG_FILES, log_files.size()):
+        DirAccess.remove_absolute(log_files[i].path)
+        print("Logger: 已清理旧日志 — %s" % log_files[i].path)
+
+
+## 获取最近的日志条目（供 DebugConsole 使用）
 func get_recent(count: int = 100) -> Array[Dictionary]:
-    if _log.size() <= count:
-        return _log.duplicate()
-    return _log.slice(-count)
+    if _entries.size() <= count:
+        return _entries.duplicate()
+    return _entries.slice(-count)
+
+
+## 获取当前日志文件的完整路径
+func get_log_file_path() -> String:
+    return _file_path
 ```
 
 ### 15.2 DebugConsole — 游戏内控制台
