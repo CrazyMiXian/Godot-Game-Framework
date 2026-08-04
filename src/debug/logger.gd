@@ -2,8 +2,6 @@ extends  Node
 
 enum Level{DEBUG = 0, INFO = 1, WARN = 2, ERROR = 3}
 
-# TODO: 从config配置文件中获取配置项
-
 ## 配置项
 # 日志最低等级
 var min_level : Level = Level.DEBUG
@@ -13,6 +11,8 @@ var _log_path : String = ""
 var _log_dir : String = "user://custom_logs/"
 # 最大日志存在数量
 const MAX_LOG_FILES := 5
+# 内存中的日志条目（用于 DebugConsole 等实时查看）
+var _entries: Array[Dictionary] = []
 
 # 内部项
 signal log_added(entry: Dictionary)
@@ -28,6 +28,7 @@ func _ready() -> void:
 func initialize() -> void:
 	print("[Logger]: 被调用")
 	var err := DirAccess.make_dir_recursive_absolute(_log_dir)
+	load_config()
 	print("[Logger]: 创建日志目录 - %s" % _log_dir)
 	if err != OK:
 		push_error("Logger: 无法创建日志目录 - %s (错误码: %d)" % [_log_path, err])
@@ -78,6 +79,7 @@ func _log(level:Level, message: String, source) -> void:
 		"frame": Engine.get_process_frames(),
 	}
 	
+	_entries.append(entry)
 	log_added.emit(entry)
 	
 	var level_str : String = Level.keys()[level]
@@ -116,6 +118,22 @@ func _write_to_file(entry:Dictionary) -> void:
 	file.store_line("[%s] [%s] %s: %s" % [entry.time, Level.keys()[entry.level], entry.source, entry.message])
 	file.close()
 
+
+# 读取配置文件
+func load_config() -> void:
+	var config_level : String = "debug"
+	if $"/root".has_node("ConfigManager"):
+		config_level = ConfigManager.get_value("debug.log_level", "debug")
+		print("[Logger]: 从ConfigManager读取log_level = %s" % config_level)
+	else:
+		print("[Logger]: ConfigManager未注册，使用默认log_level = debug")
+	match config_level:
+		"debug": min_level = Level.DEBUG
+		"info": min_level = Level.INFO
+		"warn": min_level = Level.WARN
+		"error": min_level = Level.ERROR
+
+
 # 清除旧日志文件
 func _clean_up_old_logs() -> void:
 	var dir := DirAccess.open(_log_dir)
@@ -143,4 +161,13 @@ func _clean_up_old_logs() -> void:
 	for i in range(MAX_LOG_FILES, log_files.size()):
 		DirAccess.remove_absolute(log_files[i].path)
 		print("[Logger]: 已清理旧日志文 - %s" % log_files[i].path)
-	
+
+# 获取最近的日志条目（供 DebugConsole 使用）
+func get_recent(count: int = 100) -> Array[Dictionary]:
+	if _entries.size() <= count:
+		return _entries.duplicate()
+	return _entries.slice(-count)
+
+# 获取当前日志文件的完整路径
+func get_log_file_path() -> String:
+	return _log_path
