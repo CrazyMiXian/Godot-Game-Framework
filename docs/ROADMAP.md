@@ -126,15 +126,15 @@ FSM Buff Ability
 > **完成标志**：A 脚本 `EventBus.on("test", f)`，B 脚本 `EventBus.emit("test", {...})`，A 收到回调。
 
 - [x] 1. `class_name EventBus extends Node` — Autoload
-- [ ] 2. `on(event_name, callable)` → 返回 `int` 监听 ID — 持久监听
-- [ ] 3. `once(event_name, callable)` → 返回 `int` — 触发一次后自动移除
-- [ ] 4. `off(listener_id)` — 通过 ID 取消监听
-- [ ] 5. `emit(event_name, data)` — data 为 null 时不传参
-- [ ] 6. `emit_deferred(event_name, data)` — 下一帧触发
-- [ ] 7. `clear_event(event_name)` — 清除某事件全部监听
-- [ ] 8. `clear_all()` — 清空所有监听
-- [ ] 9. 回调中修改监听列表不崩溃 — emit 时先 `duplicate()` 列表再遍历
-- [ ] 10. `callable.is_valid()` 检查 — 防止已释放对象的回调
+- [x] 2. `on(event_name, callable)` → 返回 `int` 监听 ID — 持久监听
+- [x] 3. `once(event_name, callable)` → 返回 `int` — 触发一次后自动移除
+- [x] 4. `off(listener_id)` — 通过 ID 取消监听
+- [x] 5. `emit(event_name, data)` — data 为 null 时不传参
+- [x] 6. `emit_deferred(event_name, data)` — 下一帧触发
+- [x] 7. `clear_event(event_name)` — 清除某事件全部监听
+- [x] 8. `clear_all()` — 清空所有监听
+- [x] 9. 回调中修改监听列表不崩溃 — emit 时先 `duplicate()` 列表再遍历
+- [x] 10. `callable.is_valid()` 检查 — 防止已释放对象的回调
 
 ---
 
