@@ -21,6 +21,7 @@ ConfigManager="*uid://dfdrtl6desjar"
 LoggerGlobal="*res://src/debug/logger.gd"
 GameManager="*uid://blm07u66uqtx8"
 EventBus="*uid://vqya7aaapkmo"
+SceneManager="*uid://doyfn1htv8vw0"
 
 [display]
 
