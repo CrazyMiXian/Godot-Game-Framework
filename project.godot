@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 ConfigManager="*uid://dfdrtl6desjar"
 LoggerGlobal="*res://src/debug/logger.gd"
+GameManager="*uid://blm07u66uqtx8"
 EventBus="*uid://vqya7aaapkmo"
 
 [display]

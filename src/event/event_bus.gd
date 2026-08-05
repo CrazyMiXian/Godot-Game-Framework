@@ -30,7 +30,7 @@ func clear_all() -> void:
 # 发射事件
 func emit(event_name: String, data = null) -> void:
 	# 调试日志
-	LoggerGlobal.debug("发射事件: event_name = %s, data = %s" % [event_name, data], self.name)
+	LoggerGlobal.debug("Emit event: event_name = %s, data = %s" % [event_name, data], self.name)
 
 	if not _listeners.has(event_name):
 		return
@@ -68,7 +68,7 @@ func _add_listener(event_name: String, callable: Callable, once: bool) -> int:
 		"callable": callable,
 		"once": once,
 	})
-	LoggerGlobal.debug("添加监听: event_name = %s, id = %s, once = %s" % [event_name, id, once], self.name)
+	LoggerGlobal.debug("Add event: event_name = %s, id = %s, once = %s" % [event_name, id, once], self.name)
 	
 	return id
 
@@ -79,7 +79,7 @@ func _remove_listener_entry(event_name: String, listener_id: int) -> void:
 	var listeners: Array = _listeners[event_name]
 	for i in range(listeners.size() - 1, -1, -1):
 		if listeners[i].id == listener_id:
-			LoggerGlobal.debug("移除监听: event_name = %s, id = %s" % [event_name, listener_id], self.name)
+			LoggerGlobal.debug("Remove event: event_name = %s, id = %s" % [event_name, listener_id], self.name)
 			listeners.remove_at(i)
 			return
 			
@@ -88,7 +88,7 @@ func _off_by_id(listener_id: int) -> void:
 		var listeners: Array = _listeners[event_name]
 		for i in range(listeners.size() - 1, -1, -1):
 			if listeners[i].id == listener_id:
-				LoggerGlobal.debug("移除监听: event_name = %s, id = %s" % [event_name, listener_id], self.name)
+				LoggerGlobal.debug("Remove event: event_name = %s, id = %s" % [event_name, listener_id], self.name)
 				listeners.remove_at(i)
 				return
 
@@ -98,5 +98,5 @@ func _off_by_callable(event_name: String, callable: Callable) -> void:
 	var listeners: Array = _listeners[event_name]
 	for i in range(listeners.size() - 1, -1, -1):
 		if listeners[i].callable == callable:
-			LoggerGlobal.debug("移除监听: event_name = %s, id = %s" % [event_name, listeners[i].id], self.name)
+			LoggerGlobal.debug("Remove event: event_name = %s, id = %s" % [event_name, listeners[i].id], self.name)
 			listeners.remove_at(i)

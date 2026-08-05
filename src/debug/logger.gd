@@ -15,44 +15,56 @@ const MAX_LOG_FILES := 5
 var _entries: Array[Dictionary] = []
 
 # 内部项
+var _fully_initialized : bool = false
+
 signal log_added(entry: Dictionary)
 
-func _ready() -> void:
-	initialize()
-	debug("Hello World", self.name)
-	info("Hello World", self.name)
-	warn("Hello World", self.name)
-	error("Hello World", self.name)
 
-# 初始化
-func initialize() -> void:
-	print("[Logger]: 被调用")
-	var err := DirAccess.make_dir_recursive_absolute(_log_dir)
-	load_config()
-	print("[Logger]: 创建日志目录 - %s" % _log_dir)
-	if err != OK:
-		push_error("Logger: 无法创建日志目录 - %s (错误码: %d)" % [_log_path, err])
-		print("[Logger]: 日志创建失败，错误码 %d" % err)
+func _ready() -> void:
+	_bootstrap()
+
+# 分两步加载，保证日志全程可用
+func _bootstrap() -> void:
+	if _fully_initialized:
 		return
-	print("[Logger]: 日志目录就绪")
+	
+	var err := DirAccess.make_dir_recursive_absolute(_log_dir)
+	print("[Logger]: Log directory created - %s" % _log_dir)
+	if err != OK:
+		push_error("Logger: Failed to creat log directory - %s (ERROR CODE: %d)" % [_log_path, err])
+		print("[Logger]: Failed to creat log directory，ERROR CODE: %d" % err)
+		return
+	print("[Logger]: Log directory ready")
 	# 获取系统时间并给日志命名
 	var time_str: String = Time.get_datetime_string_from_system()
 	time_str = time_str.replace(":","-")
 	_log_path = _log_dir + time_str + ".log"
-	print("[Logger]: 创建日志 - %s"%_log_path)
+	print("[Logger]: Creating log file - %s"%_log_path)
 	var _file := FileAccess.open(_log_path,FileAccess.WRITE)
 	if _file:
 		_file.store_line("=========================")
 		_file.store_line("Logger - %s" % Time.get_datetime_string_from_system())
 		_file.store_line("=========================")
-		print("[Logger]: 日志创建成功")
+		print("[Logger]: Log file created successfully")
 	else:
-		push_error("Logger: 无法创建日志文件 - %s"%_log_path)
-		print("[Logger]: 日志创建失败 - %s"%_log_path)
+		push_error("Logger: Failed to create log file - %s"%_log_path)
+		print("[Logger]: Failed to create log file - %s"%_log_path)
 		return
 	
 	_clean_up_old_logs()
-	print("[Logger]: 初始化完成，准备就绪")
+	print("[Logger]: Bootstrap complete, logging active (default level: DEBUG)")
+
+
+# 初始化
+func initialize() -> void:
+	if _fully_initialized:
+		LoggerGlobal.warn("Logger already initialized, skipping duplicate init", self.name)
+		return
+	
+	load_config()
+	_fully_initialized = true
+	LoggerGlobal.info("Logger fully initialized, min_level=%s" % Level.keys()[min_level], self.name)
+	
 
 func debug(message:String, source = null) -> void:
 	_log(Level.DEBUG, message, source)
@@ -95,14 +107,14 @@ func _write_to_file(entry:Dictionary) -> void:
 	# 如果文件被外部删除，重新创建文件
 	if not FileAccess.file_exists(_log_path):
 		var f := FileAccess.open(_log_path, FileAccess.WRITE)
-		print_rich("[color=orange][%s][/color]" % "[Logger]: 日志可能丢失，尝试重新创建日志")
+		print_rich("[color=orange][%s][/color]" % "[Logger]: Log may be lost, attempting to recreate log file")
 		if f: f.close()
 
 	# 重新创建文件失败，则报错提示
 	if _log_path.is_empty():
 		if not _write_failed_warned:
 			_write_failed_warned = true
-			push_warning("[Logger]: _log_path为空，日志写入已跳过(initialize()是否未被调用？)")
+			push_warning(" _log_path is empty, log write skipped (was initialize() not called?")
 		return
 	
 	# 判断日志是否能够写入
@@ -110,7 +122,7 @@ func _write_to_file(entry:Dictionary) -> void:
 	if file == null:
 		if not _write_failed_warned:
 			_write_failed_warned = true
-			push_warning("[Logger]: 无法打开日志进行写入 - %s" % _log_path)
+			push_warning("[Logger]: Cannot open log file for writing - %s" % _log_path)
 		return
 	_write_failed_warned = false
 	# 写入日志
@@ -124,9 +136,9 @@ func load_config() -> void:
 	var config_level : String = "debug"
 	if $"/root".has_node("ConfigManager"):
 		config_level = ConfigManager.get_value("debug.log_level", "debug")
-		print("[Logger]: 从ConfigManager读取log_level = %s" % config_level)
+		print("[Logger]: Loaded log_level from ConfigManager = %s" % config_level)
 	else:
-		print("[Logger]: ConfigManager未注册，使用默认log_level = debug")
+		print("[Logger]: ConfigManager not registered, using default log_level = debug")
 	match config_level:
 		"debug": min_level = Level.DEBUG
 		"info": min_level = Level.INFO
@@ -160,7 +172,7 @@ func _clean_up_old_logs() -> void:
 	# 清除日志
 	for i in range(MAX_LOG_FILES, log_files.size()):
 		DirAccess.remove_absolute(log_files[i].path)
-		print("[Logger]: 已清理旧日志文 - %s" % log_files[i].path)
+		print("[Logger]: Cleaned up old log file - %s" % log_files[i].path)
 
 # 获取最近的日志条目（供 DebugConsole 使用）
 func get_recent(count: int = 100) -> Array[Dictionary]:

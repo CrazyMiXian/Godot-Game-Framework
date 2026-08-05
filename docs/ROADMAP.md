@@ -161,18 +161,18 @@ FSM Buff Ability
 >
 > **完成标志**：启动后控制台按顺序打印各子系统初始化日志，`pause(GAMEPLAY)` 后场景冻结。
 
-- [ ] 1. `class_name GameManager extends Node` — Autoload
-- [ ] 2. `_ready()` 中收集有 `initialize()` 的 Autoload — 遍历 `root.get_children()`
-- [ ] 3. 按序调用各子系统的 `initialize()` — 顺序 = autoload 声明顺序即可
-- [ ] 4. `framework_ready` 信号 — 所有初始化完成后发射
-- [ ] 5. `game_quitting` 信号 — `NOTIFICATION_WM_CLOSE_REQUEST` 时发射
-- [ ] 6. `register_subsystem(name, node)` — 其他 Autoload 可主动注册
-- [ ] 7. `get_subsystem(name)` — 按名查找已注册子系统
-- [ ] 8. 内置 `PauseLayer` 枚举 — `NONE / GAMEPLAY / UI / SYSTEM`
-- [ ] 9. `pause(layer, source)` → 返回 `int` — 多层暂停栈，返回取消 ID
-- [ ] 10. `unpause(pause_id)` — 通过 ID 取消暂停
-- [ ] 11. `is_layer_paused(layer)` — 判断某层是否被暂停
-- [ ] 12. 暂停自动调用 `get_tree().paused` — GAMEPLAY 及以上层级暂停场景树
+- [x] 1. `class_name GameManager extends Node` — Autoload
+- [x] 2. `_ready()` 中收集有 `initialize()` 的 Autoload — 遍历 `root.get_children()`
+- [x] 3. 按序调用各子系统的 `initialize()` — 顺序 = autoload 声明顺序即可
+- [x] 4. `framework_ready` 信号 — 所有初始化完成后发射
+- [x] 5. `game_quitting` 信号 — `NOTIFICATION_WM_CLOSE_REQUEST` 时发射
+- [x] 6. `register_subsystem(name, node)` — 其他 Autoload 可主动注册
+- [x] 7. `get_subsystem(name)` — 按名查找已注册子系统
+- [x] 8. 内置 `PauseLayer` 枚举 — `NONE / GAMEPLAY / UI / SYSTEM`
+- [x] 9. `pause(layer, source)` → 返回 `int` — 多层暂停栈，返回取消 ID
+- [x] 10. `unpause(pause_id)` — 通过 ID 取消暂停
+- [x] 11. `is_layer_paused(layer)` — 判断某层是否被暂停
+- [x] 12. 暂停自动调用 `get_tree().paused` — GAMEPLAY 及以上层级暂停场景树
 
 ---
 

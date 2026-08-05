@@ -1,10 +1,5 @@
 [gd_scene format=3 uid="uid://bwd4s7w0fg4wm"]
 
-[ext_resource type="Script" uid="uid://codwuguf4130v" path="res://src/test/event_bus_test_1.gd" id="1_ev4ex"]
-[ext_resource type="Script" uid="uid://pdmcmei67ccm" path="res://src/test/event_bus_test_2.gd" id="2_cg5qo"]
-
 [node name="Node" type="Node" unique_id=378320445]
-script = ExtResource("1_ev4ex")
 
 [node name="Node" type="Node" parent="." unique_id=230756425]
-script = ExtResource("2_cg5qo")
