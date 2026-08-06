@@ -184,16 +184,16 @@ FSM Buff Ability
 >
 > **完成标志**：`SceneManager.change_scene("res://b.tscn")` 黑屏过渡→新场景显示→淡入。
 
-- [ ] 1. `class_name SceneManager extends Node` — Autoload
-- [ ] 2. `change_scene(path, data, transition)` — 带过渡的异步场景切换
-- [ ] 3. `push_scene(path, data, transition)` — 压入新场景，保留当前场景
-- [ ] 4. `pop_scene(transition)` — 弹出恢复上一层
-- [ ] 5. `load_progress` 信号 — 异步加载进度 `0~100`
-- [ ] 6. `scene_changed` 信号 — 切换完成后发射
-- [ ] 7. `add_sub_scene(layer_name, path, data)` — 叠加子场景（UI层、对话层等）
-- [ ] 8. 过渡效果 FadeIn/FadeOut — CanvasLayer + ColorRect + Tween
-- [ ] 9. 场景数据传递 — `_on_scene_enter(data)` 方法约定
-- [ ] 10. 场景挂起/恢复 — `process_mode = DISABLED/INHERIT`
+- [x] 1. `class_name SceneManager extends Node` — Autoload
+- [x] 2. `change_scene(path, data, transition)` — 带过渡的异步场景切换
+- [x] 3. `push_scene(path, data, transition)` — 压入新场景，保留当前场景
+- [x] 4. `pop_scene(transition)` — 弹出恢复上一层
+- [x] 5. `load_progress` 信号 — 异步加载进度 `0~100`
+- [x] 6. `scene_changed` 信号 — 切换完成后发射
+- [x] 7. `add_sub_scene(layer_name, path, data)` — 叠加子场景（UI层、对话层等）
+- [x] 8. 过渡效果 FadeIn/FadeOut — CanvasLayer + ColorRect + Tween
+- [x] 9. 场景数据传递 — `_on_scene_enter(data)` 方法约定
+- [x] 10. 场景挂起/恢复 — `process_mode = DISABLED/INHERIT`
 
 ---
 
