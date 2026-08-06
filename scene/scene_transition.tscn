@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://c4yne64vdtqcd"]
+
+[ext_resource type="Texture2D" uid="uid://cquasynqlurfx" path="res://assets/textures/loading.png" id="1_6xfxc"]
+[ext_resource type="Script" uid="uid://31bqunho0dmh" path="res://src/scene/scene_transition.gd" id="1_va7oc"]
+
+[node name="SceneTransition" type="Control" unique_id=1160080193]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_va7oc")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1654451173]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6xfxc")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1716707574]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
