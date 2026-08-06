@@ -25,10 +25,15 @@ func initialize() -> void:
 
 # 创建过渡效果: 在根节点通过预设画面创建一个名为"SceneTransition"的场景包
 func _create_transition_layer() -> void:
-	var transition_scene := load("res://src/scene/scene_transition.tscn") as PackedScene
+	LoggerGlobal.info("Create loading scene", self.name)
+	var transition_scene := load("res://scene/scene_transition.tscn") as PackedScene
 	var transition := transition_scene.instantiate()
+	# 在加入根节点前就设置
 	transition.name = "SceneTransition"
+	#transition.visible = false
 	get_tree().root.call_deferred("add_child", transition)
+	
+	
 
 # 切换场景(替代当前场景)
 func change_scene(path: String, data: Dictionary = {}, transition_type: TransitionType = TransitionType.FADE) -> void:
@@ -61,6 +66,7 @@ func add_sub_scene(layer_name, path, data) -> void:
 
 # 切换场景的核心代码
 func _change_scene_internal(path: String, data: Dictionary, transition_type: TransitionType, push: bool) -> void:
+	LoggerGlobal.info("Loading new scene - %s" % path, self.name)
 	await _play_transition(transition_type, true)
 	
 	var current_root := get_tree().current_scene
@@ -79,10 +85,10 @@ func _change_scene_internal(path: String, data: Dictionary, transition_type: Tra
 	
 	# 显示加载进度
 	while true:
-		var status := ResourceLoader.load_threaded_get_status(path)
+		var progress_array := []
+		var status := ResourceLoader.load_threaded_get_status(path, progress_array)
 		match status:
 			ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-				var progress_array := []
 				load_progress.emit(progress_array[0] * 100.0 if progress_array.size() > 0 else 0.0)
 			ResourceLoader.THREAD_LOAD_LOADED:
 				break
@@ -124,3 +130,5 @@ func _play_transition(transition_type: TransitionType, is_out: bool) -> void:
 			else:
 				await  transition.fade_in()
 		# TODO:更多效果等待后续拓展
+		
+	
