@@ -33,7 +33,6 @@ func _create_transition_layer() -> void:
 	#transition.visible = false
 	get_tree().root.call_deferred("add_child", transition)
 	
-	
 
 # 切换场景(替代当前场景)
 func change_scene(path: String, data: Dictionary = {}, transition_type: TransitionType = TransitionType.FADE) -> void:

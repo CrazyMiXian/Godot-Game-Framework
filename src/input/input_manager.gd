@@ -50,6 +50,8 @@ func _ensure_input_map() -> void:
 			event.axis = aim_axes[action][0]
 			event.axis_value = aim_axes[action][1]
 			InputMap.action_add_event(action, event)
+	
+	LoggerGlobal.info("Using default input settings", self.name)
 
 # 判断逻辑动作是否刚按下
 func is_action_just_pressed(action: String, buffer_frames: int = 0) -> bool:
