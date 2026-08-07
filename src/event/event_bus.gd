@@ -100,3 +100,25 @@ func _off_by_callable(event_name: String, callable: Callable) -> void:
 		if listeners[i].callable == callable:
 			LoggerGlobal.debug("Remove event: event_name = %s, id = %s" % [event_name, listeners[i].id], self.name)
 			listeners.remove_at(i)
+
+
+''' 使用示例
+# 玩家死亡发射事件
+EventBus.emit("player_died", {
+    "player_id": 1,
+    "killer": "enemy_orc",
+    "position": player.global_position,
+})
+
+# UI 监听
+var _listener_id: int
+
+func _ready():
+    _listener_id = EventBus.on("player_died", _on_player_died)
+
+func _on_player_died(data: Dictionary):
+    print("玩家 %d 被 %s 击杀" % [data.player_id, data.killer])
+
+func _exit_tree():
+    EventBus.off(_listener_id)  # 重要：防止悬垂引用
+'''
