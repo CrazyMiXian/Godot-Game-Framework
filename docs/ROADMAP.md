@@ -244,15 +244,15 @@ FSM Buff Ability
 >
 > **完成标志**：`InputManager.get_move_vector()` 返回正确的移动方向，缓冲攻击能在动作结束前提前输入。
 
-- [ ] 1. `class_name InputManager extends Node` — Autoload
-- [ ] 2. `is_action_just_pressed(action, buffer_frames)` — 刚按下 + 缓冲帧
-- [ ] 3. `is_action_just_released(action)` — 刚释放
-- [ ] 4. `get_action_strength(action)` — 按压强度（0-1）
-- [ ] 5. `get_move_vector()` — 统一 WASD + 手柄左摇杆
-- [ ] 6. `get_aim_vector(from_pos)` — 鼠标位置 or 右摇杆方向
-- [ ] 7. `_ensure_input_map()` — 确保默认 Input Map 存在
-- [ ] 8. `InputBuffer` 类 — 指令缓冲：`push_event()` `match_sequence()` `clear()`
-- [ ] 9. 缓冲窗口可配置 — 默认 10 帧
+- [x] 1. `class_name InputManager extends Node` — Autoload
+- [x] 2. `is_action_just_pressed(action, buffer_frames)` — 刚按下 + 缓冲帧
+- [x] 3. `is_action_just_released(action)` — 刚释放
+- [x] 4. `get_action_strength(action)` — 按压强度（0-1）
+- [x] 5. `get_move_vector()` — 统一 WASD + 手柄左摇杆
+- [x] 6. `get_aim_vector(from_pos)` — 鼠标位置 or 右摇杆方向
+- [x] 7. `_ensure_input_map()` — 确保默认 Input Map 存在
+- [x] 8. `InputBuffer` 类 — 指令缓冲：`push_event()` `match_sequence()` `clear()`
+- [x] 9. 缓冲窗口可配置 — 默认 10 帧
 
 ---
 
