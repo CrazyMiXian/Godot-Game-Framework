@@ -635,7 +635,7 @@ GameManager.unpause(pause_id)
 
 ## 3. EventBus — 事件总线
 
-### 3.1 核心实现  Done
+### 3.1 核心实现  Done   当前问题：一次性生成大量对象会缺失一部分对象。   可能是单帧无法一次性执行大量指令，需要手动添加时延
 
 ```gdscript
 # src/event/event_bus.gd

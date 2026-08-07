@@ -280,15 +280,15 @@ FSM Buff Ability
 >
 > **完成标志**：100 发子弹从池中循环取用，FPS 稳定无 GC 抖动。
 
-- [ ] 1. `class_name ObjectPool extends RefCounted` — 不是 Node，轻量
-- [ ] 2. `_init(scene, parent, preload, max)` — 构造参数
-- [ ] 3. `acquire()` → Node — 获取实例，自动激活
-- [ ] 4. `release(instance)` — 回收，自动禁用并从场景树移除
-- [ ] 5. `release_all()` — 全部回收
-- [ ] 6. `get_stats()` — 可用数/活跃数/命中率
-- [ ] 7. 池满拒绝创建 — `acquire()` 返回 null
-- [ ] 8. 预热 — 构造时 `preload` 个实例就绪
-- [ ] 9. `pool_initialize()` / `pool_reset()` 约定 — 对象生命周期钩子
+- [x] 1. `class_name ObjectPool extends RefCounted` — 不是 Node，轻量
+- [x] 2. `_init(scene, parent, preload, max)` — 构造参数
+- [x] 3. `acquire()` → Node — 获取实例，自动激活
+- [x] 4. `release(instance)` — 回收，自动禁用并从场景树移除
+- [x] 5. `release_all()` — 全部回收
+- [x] 6. `get_stats()` — 可用数/活跃数/命中率
+- [x] 7. 池满拒绝创建 — `acquire()` 返回 null
+- [x] 8. 预热 — 构造时 `preload` 个实例就绪
+- [x] 9. `pool_initialize()` / `pool_reset()` 约定 — 对象生命周期钩子
 
 ---
 
