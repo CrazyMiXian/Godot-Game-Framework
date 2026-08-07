@@ -47,7 +47,7 @@ func is_action_just_pressed(action: String, buffer_frames: int = 0) -> bool:
 	return false
 	
 ## 判断逻辑动作是否刚释放
-#func is_action_just_released(action: String) -> bool:
+func is_action_just_released(action: String) -> bool:
 	return Input.is_action_just_released(action)
 
 
