@@ -27,6 +27,13 @@ func _ensure_input_map() -> void:
 		"left": [KEY_LEFT, KEY_A],
 		"right": [KEY_RIGHT, KEY_D],
 	}
+	# 右摇杆默认输入
+	var aim_axes := {
+		"aim_left":  [JOY_AXIS_RIGHT_X, -1.0],
+		"aim_right": [JOY_AXIS_RIGHT_X,  1.0],
+		"aim_up":    [JOY_AXIS_RIGHT_Y, -1.0],
+		"aim_down":  [JOY_AXIS_RIGHT_Y,  1.0],
+	}
 
 	for action in default_actions:
 		if not InputMap.has_action(action):
@@ -35,6 +42,14 @@ func _ensure_input_map() -> void:
 				var event := InputEventKey.new()
 				event.keycode = key
 				InputMap.action_add_event(action, event)
+				
+	for action in aim_axes:
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+			var event := InputEventJoypadMotion.new()
+			event.axis = aim_axes[action][0]
+			event.axis_value = aim_axes[action][1]
+			InputMap.action_add_event(action, event)
 
 # 判断逻辑动作是否刚按下
 func is_action_just_pressed(action: String, buffer_frames: int = 0) -> bool:
