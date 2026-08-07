@@ -20,12 +20,12 @@ func initialize() -> void:
 func _ensure_input_map() -> void:
 	# 确保框架默认的输入动作存在
 	var default_actions := {
-		"ui_accept": [KEY_ENTER, KEY_SPACE],
-		"ui_cancel": [KEY_ESCAPE],
-		"ui_up": [KEY_UP, KEY_W],
-		"ui_down": [KEY_DOWN, KEY_S],
-		"ui_left": [KEY_LEFT, KEY_A],
-		"ui_right": [KEY_RIGHT, KEY_D],
+		"accept": [KEY_ENTER, KEY_SPACE],
+		"cancel": [KEY_ESCAPE],
+		"up": [KEY_UP, KEY_W],
+		"down": [KEY_DOWN, KEY_S],
+		"left": [KEY_LEFT, KEY_A],
+		"right": [KEY_RIGHT, KEY_D],
 	}
 
 	for action in default_actions:
@@ -40,13 +40,14 @@ func _ensure_input_map() -> void:
 func is_action_just_pressed(action: String, buffer_frames: int = 0) -> bool:
 	if Input.is_action_just_pressed(action):
 		_record_input(action, true)
+		print(action)
 		return true
 	if buffer_frames > 0:
 		return _check_buffer(action, true, buffer_frames)
 	return false
 	
 ## 判断逻辑动作是否刚释放
-func is_action_just_released(action: String) -> bool:
+#func is_action_just_released(action: String) -> bool:
 	return Input.is_action_just_released(action)
 
 
@@ -56,7 +57,7 @@ func get_action_strength(action: String) -> float:
 
 ## 获取移动向量（键盘 WASD + 手柄左摇杆统一）
 func get_move_vector() -> Vector2:
-	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	return Input.get_vector("left", "right", "up", "down")
 
 ## 获取瞄准方向（鼠标/右摇杆）
 func get_aim_vector(from_position: Vector2) -> Vector2:

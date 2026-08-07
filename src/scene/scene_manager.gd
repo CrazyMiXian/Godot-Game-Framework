@@ -114,6 +114,7 @@ func _change_scene_internal(path: String, data: Dictionary, transition_type: Tra
 	scene_changed.emit(path)
 
 	await _play_transition(transition_type, false)
+	LoggerGlobal.info("Scene loaded successfully", self.name)
 
 func _play_transition(transition_type: TransitionType, is_out: bool) -> void:
 	if transition_type == TransitionType.NONE:
