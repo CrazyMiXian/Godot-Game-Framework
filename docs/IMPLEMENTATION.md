@@ -242,7 +242,7 @@ res://
 
 ## 2. Core — 核心框架
 
-### 2.1 GameManager（Autoload）
+### 2.1 GameManager（Autoload） Done
 
 **职责**：框架入口，子系统初始化调度，生命周期分发，暂停状态管理。
 
@@ -425,7 +425,7 @@ func is_layer_paused(layer: PauseManager.PauseLayer) -> bool:
 - 拓扑排序确保 AudioManager 在 UIManager 之前初始化（因为 UI 按钮需要音效）。
 - `NOTIFICATION_WM_CLOSE_REQUEST` 是 Godot 4 的新通知，比 `get_tree().auto_accept_quit` 更精细。
 
-### 2.2 ConfigManager（Autoload）
+### 2.2 ConfigManager（Autoload） Done
 
 **职责**：读取配置文件，提供统一配置访问接口。
 
@@ -524,7 +524,7 @@ func _default_config() -> Dictionary:
 }
 ```
 
-### 2.3 PauseManager（普通类，非 Autoload）
+### 2.3 PauseManager（普通类，非 Autoload） Done
 
 **职责**：多层暂停栈。UI 打开时暂停游戏逻辑，但菜单本身仍可操作；系统对话框弹出时连 UI 也暂停。
 
@@ -635,7 +635,7 @@ GameManager.unpause(pause_id)
 
 ## 3. EventBus — 事件总线
 
-### 3.1 核心实现
+### 3.1 核心实现  Done
 
 ```gdscript
 # src/event/event_bus.gd
@@ -781,7 +781,7 @@ func _exit_tree():
 
 ## 4. Scene — 场景管理
 
-### 4.1 SceneManager（Autoload）
+### 4.1 SceneManager（Autoload） Done
 
 **职责**：场景切换、场景栈、异步加载、过渡效果。
 
@@ -903,7 +903,7 @@ func _change_scene_internal(p_path: String, p_data: Dictionary, p_transition: Tr
     await _play_transition(p_transition, false)
 ```
 
-### 4.2 过渡效果（scene_transition.tscn）
+### 4.2 过渡效果（scene_transition.tscn） Done
 
 ```
 SceneTransition (CanvasLayer)
@@ -991,7 +991,7 @@ SceneManager.add_sub_scene("ui", "res://ui/hud.tscn")
 
 ## 5. UI — UI 框架
 
-### 5.1 UIManager（Autoload）
+### 5.1 UIManager（Autoload）koi
 
 ```gdscript
 # src/ui/ui_manager.gd
@@ -1386,7 +1386,7 @@ Master
 
 ## 7. Input — 输入管理
 
-### 7.1 InputManager（Autoload）
+### 7.1 InputManager（Autoload） Done
 
 ```gdscript
 # src/input/input_manager.gd
@@ -2851,7 +2851,7 @@ func shake(intensity: float, duration: float = 0.3) -> void:
 
 ## 15. Debug — 调试与性能
 
-### 15.1 Logger（Autoload）
+### 15.1 Logger（Autoload） Done
 
 ```gdscript
 # src/debug/logger.gd
