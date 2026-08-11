@@ -203,19 +203,19 @@ FSM Buff Ability
 >
 > **完成标志**：`UIManager.show_dialog("confirm").set_title("?")...show()` 弹出确认框，确认后回调执行。
 
-- [ ] 1. `class_name UIManager extends Node` — Autoload
-- [ ] 2. 创建独立 UI CanvasLayer — 确保 UI 渲染在所有内容之上
-- [ ] 3. `show(panel_path, data)` → 返回 UIPanel — 打开面板
-- [ ] 4. `close_top()` — 关闭当前最顶层
-- [ ] 5. `close_to(panel)` — 关闭到指定面板
-- [ ] 6. `show_dialog(type)` → `DialogBuilder` — 链式弹窗 API
-- [ ] 7. `class_name UIPanel extends Control` — 面板基类
-- [ ] 8. 打开/关闭动画 — AnimationPlayer 驱动 `open`/`close` 动画
-- [ ] 9. `pause_game` 属性 — 打开时自动暂停游戏
-- [ ] 10. `block_input` 属性 — 拦截背景点击
-- [ ] 11. `set_interactable(bool)` — 被覆盖时禁用交互
-- [ ] 12. `class_name DialogBuilder extends RefCounted` — 链式构建器
-- [ ] 13. 链式方法 `set_title()` `set_content()` `on_confirm()` `on_cancel()` `show()`
+- [x] 1. `class_name UIManager extends Node` — Autoload
+- [x] 2. 创建独立 UI CanvasLayer — 确保 UI 渲染在所有内容之上
+- [x] 3. `show(panel_path, data)` → 返回 UIPanel — 打开面板
+- [x] 4. `close_top()` — 关闭当前最顶层
+- [x] 5. `close_to(panel)` — 关闭到指定面板
+- [x] 6. `show_dialog(type)` → `DialogBuilder` — 链式弹窗 API
+- [x] 7. `class_name UIPanel extends Control` — 面板基类
+- [x] 8. 打开/关闭动画 — AnimationPlayer 驱动 `open`/`close` 动画
+- [x] 9. `pause_game` 属性 — 打开时自动暂停游戏
+- [x] 10. `block_input` 属性 — 拦截背景点击
+- [x] 11. `set_interactable(bool)` — 被覆盖时禁用交互
+- [x] 12. `class_name DialogBuilder extends RefCounted` — 链式构建器
+- [x] 13. 链式方法 `set_title()` `set_content()` `on_confirm()` `on_cancel()` `show()`
 
 ---
 
@@ -278,7 +278,7 @@ FSM Buff Ability
 
 > **目标**：通用对象池，减少频繁创建销毁。
 >
-> **完成标志**：100 发子弹从池中循环取用，FPS 稳定无 GC 抖动。
+>// **完成标志**：100 发子弹从池中循环取用，FPS 稳定无 GC 抖动。
 
 - [x] 1. `class_name ObjectPool extends RefCounted` — 不是 Node，轻量
 - [x] 2. `_init(scene, parent, preload, max)` — 构造参数

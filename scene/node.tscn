@@ -1,12 +1,9 @@
 [gd_scene format=3 uid="uid://bwd4s7w0fg4wm"]
 
-[ext_resource type="Script" uid="uid://d3umcvoga4wan" path="res://src/test/object_pool_test_1.gd" id="1_ev4ex"]
-
 [node name="Node" type="Node" unique_id=378320445]
 
 [node name="Node" type="Node" parent="." unique_id=230756425]
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1567276856]
-script = ExtResource("1_ev4ex")
 
 [node name="Node3D" type="Node3D" parent="." unique_id=596260660]
