@@ -225,16 +225,16 @@ FSM Buff Ability
 >
 > **完成标志**：`AudioManager.play_bgm(bgm_stream)` 音乐渐入播放，`play_sfx` 多个音效同时响。
 
-- [ ] 1. `class_name AudioManager extends Node` — Autoload
-- [ ] 2. 6 个 AudioBus 频道 — Master / BGM / BGS / SFX / Voice / UI
-- [ ] 3. `play_bgm(stream, fade_in)` — 背景音乐播放 + 淡入
-- [ ] 4. BGM 淡出切换 — 切歌时先淡出再淡入
-- [ ] 5. `play_sfx(stream, pitch_var)` — 音效播放，可选随机音高
-- [ ] 6. `play_ui_sfx(stream)` — UI 交互音效
-- [ ] 7. `set_channel_volume(channel, vol)` — 线性 0-1 映射到 dB
-- [ ] 8. 音量从 ConfigManager 恢复 — `initialize()` 中读取
-- [ ] 9. SFXPool 音效池 — 预创建 N 个 AudioStreamPlayer，用完回收
-- [ ] 10. 池满时临时创建 — 不拒绝播放，池缩容再回收
+- [x] 1. `class_name AudioManager extends Node` — Autoload
+- [x] 2. 6 个 AudioBus 频道 — Master / BGM / BGS / SFX / Voice / UI
+- [x] 3. `play_bgm(stream, fade_in)` — 背景音乐播放 + 淡入
+- [x] 4. BGM 淡出切换 — 切歌时先淡出再淡入
+- [x] 5. `play_sfx(stream, pitch_var)` — 音效播放，可选随机音高
+- [x] 6. `play_ui_sfx(stream)` — UI 交互音效
+- [x] 7. `set_channel_volume(channel, vol)` — 线性 0-1 映射到 dB
+- [x] 8. 音量从 ConfigManager 恢复 — `initialize()` 中读取
+- [x] 9. SFXPool 音效池 — 预创建 N 个 AudioStreamPlayer，用完回收
+- [x] 10. 池满时临时创建 — 不拒绝播放，池缩容再回收
 
 ---
 

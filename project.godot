@@ -23,6 +23,7 @@ GameManager="*uid://blm07u66uqtx8"
 EventBus="*uid://vqya7aaapkmo"
 SceneManager="*uid://doyfn1htv8vw0"
 UiManager="*uid://ce7uhdji2cgl1"
+AudioManager="*uid://tw0vhws2jd6r"
 InputManager="*uid://bb4qgxj51y1r"
 
 [display]
