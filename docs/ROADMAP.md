@@ -106,16 +106,16 @@ FSM Buff Ability
 >
 > **完成标志**：调用 `Easing.ease_out_bounce(0.5)` 返回正确值，`FileUtils.read_json` 能正常解析。
 
-- [ ] 1. `Easing` 缓动函数类 — `ease_out_quad` `ease_out_bounce` `ease_out_elastic` `ease_in_out_cubic` 等 10+ 个
-- [ ] 2. `RandomUtils.weighted_choice(dict)` — `{"sword":30, "shield":20}` → 按权重返回 key
-- [ ] 3. `RandomUtils.shuffle(arr)` — Fisher-Yates 洗牌
-- [ ] 4. `RandomUtils.normal_random(mean, std)` — Box-Muller 正态分布随机数
+- [x] 1. `Easing` 缓动函数类 — `ease_out_quad` `ease_out_bounce` `ease_out_elastic` `ease_in_out_cubic` 等 10+ 个
+- [x] 2. `RandomUtils.weighted_choice(dict)` — `{"sword":30, "shield":20}` → 按权重返回 key
+- [x] 3. `RandomUtils.shuffle(arr)` — Fisher-Yates 洗牌
+- [x] 4. `RandomUtils.normal_random(mean, std)` — Box-Muller 正态分布随机数
 - [ ] 5. `TimeUtils.delay(scene_tree, seconds)` — 返回 `await` 用的 Signal
 - [ ] 6. `TimeUtils.wait_frames(scene_tree, frames)` — 等待 N 帧
-- [ ] 7. `FileUtils.read_json(path)` — 读取 JSON 文件返回 Dictionary
-- [ ] 8. `FileUtils.write_json(path, data)` — 写入 JSON 文件
-- [ ] 9. `FileUtils.list_files(dir, ext)` — 列出目录下指定扩展名的文件
-- [ ] 10. `GDExtensions.array_random(arr)` — 数组随机取一个元素
+- [x] 7. `FileUtils.read_json(path)` — 读取 JSON 文件返回 Dictionary
+- [x] 8. `FileUtils.write_json(path, data)` — 写入 JSON 文件
+- [x] 9. `FileUtils.list_files(dir, ext)` — 列出目录下指定扩展名的文件
+- [x] 10. `GDExtensions.array_random(arr)` — 数组随机取一个元素
 
 ---
 
