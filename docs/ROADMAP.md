@@ -300,25 +300,25 @@ FSM Buff Ability
 >
 > **完成标志**：创建 Orc 阵营敌对 Player，Player 攻击 Orc 伤害递减，Orc 生命归零触发 `die()`。
 
-- [ ] 1. `class_name Entity extends Node2D` — 基础实体
-- [ ] 2. `entity_id` 自动生成 — 唯一标识
-- [ ] 3. `faction: Faction` — 阵营引用
-- [ ] 4. `take_damage(amount, source)` — 伤害接口
-- [ ] 5. `take_heal(amount)` — 治疗接口
-- [ ] 6. `die()` — 死亡 + `died` 信号
-- [ ] 7. `is_alive` — 存活状态
-- [ ] 8. `class_name Character extends Entity` — 角色基类
-- [ ] 9. `current_health / max_health` — 生命值 + `health_changed` 信号
-- [ ] 10. `move_speed` `level` — 基础属性
-- [ ] 11. `class_name AttributeContainer extends Resource` — 属性容器
-- [ ] 12. `base` `_bonuses` — 基础值 + 加成（平坦 + 倍率）
-- [ ] 13. `get_value(name)` — 计算最终值 `(base + flat) * (1 + mult)`
-- [ ] 14. `add_bonus(name, flat, mult, source_id)` — 添加加成，按源追踪
-- [ ] 15. `remove_bonus(name, source_id)` — 按源移除加成
-- [ ] 16. `class_name Faction extends Resource` — 阵营定义
-- [ ] 17. `friendly_to[]` `hostile_to[]` — 关系列表
-- [ ] 18. `get_relation(other)` — 返回 FRIENDLY / NEUTRAL / HOSTILE
-- [ ] 19. 护甲减伤公式 — `defense / (defense + 100)`
+- [x] 1. `class_name Entity extends Node2D` — 基础实体
+- [x] 2. `entity_id` 自动生成 — 唯一标识
+- [x] 3. `faction: Faction` — 阵营引用
+- [x] 4. `take_damage(amount, source)` — 伤害接口
+- [x] 5. `take_heal(amount)` — 治疗接口
+- [x] 6. `die()` — 死亡 + `died` 信号
+- [x] 7. `is_alive` — 存活状态
+- [x] 8. `class_name Character extends Entity` — 角色基类
+- [x] 9. `current_health / max_health` — 生命值 + `health_changed` 信号
+- [x] 10. `move_speed` `level` — 基础属性
+- [x] 11. `class_name AttributeContainer extends Resource` — 属性容器
+- [x] 12. `base` `_bonuses` — 基础值 + 加成（平坦 + 倍率）
+- [x] 13. `get_value(name)` — 计算最终值 `(base + flat) * (1 + mult)`
+- [x] 14. `add_bonus(name, flat, mult, source_id)` — 添加加成，按源追踪
+- [x] 15. `remove_bonus(name, source_id)` — 按源移除加成
+- [x] 16. `class_name Faction extends Resource` — 阵营定义
+- [x] 17. `friendly_to[]` `hostile_to[]` — 关系列表
+- [x] 18. `get_relation(other)` — 返回 FRIENDLY / NEUTRAL / HOSTILE
+- [x] 19. 护甲减伤公式 — `defense / (defense + 100)`
 
 ---
 
@@ -356,15 +356,15 @@ FSM Buff Ability
 - [ ] 6. `get_cooldown_progress()` — 冷却进度 0-1（UI用）
 - [ ] 7. `class_name AbilityComponent extends Resource` — 可组合技能组件
 - [ ] 8. `CooldownComponent` `CostComponent` 等 — 即插即用
-- [ ] 9. `class_name Buff extends Resource` — Buff 模板
-- [ ] 10. `duration` `max_stacks` `stack_policy` — 叠加策略（刷新/叠加/拒绝/独立）
-- [ ] 11. `attribute_modifiers` — 属性修改字典 `{"strength": {"flat":5, "multiplier":0.1}}`
-- [ ] 12. `tick_interval` 周期性效果 — 每 N 秒触发一次
-- [ ] 13. `on_apply()` `on_remove()` `on_tick()` — 生命周期回调
-- [ ] 14. `class_name BuffContainer extends Node` — 实体上挂载的 Buff 管理器
-- [ ] 15. `apply_buff(template, source_id)` — 同名处理（刷新/叠加/拒绝）
-- [ ] 16. `remove_buff(buff)` — 移除并清理属性修改
-- [ ] 17. `on_damage_taken` 钩子 — Buff 修改伤害值
+- [x] 9. `class_name Buff extends Resource` — Buff 模板
+- [x] 10. `duration` `max_stacks` `stack_policy` — 叠加策略（刷新/叠加/拒绝/独立）
+- [x] 11. `attribute_modifiers` — 属性修改字典 `{"strength": {"flat":5, "multiplier":0.1}}`
+- [x] 12. `tick_interval` 周期性效果 — 每 N 秒触发一次
+- [x] 13. `on_apply()` `on_remove()` `on_tick()` — 生命周期回调
+- [x] 14. `class_name BuffContainer extends Node` — 实体上挂载的 Buff 管理器
+- [x] 15. `apply_buff(template, source_id)` — 同名处理（刷新/叠加/拒绝）
+- [x] 16. `remove_buff(buff)` — 移除并清理属性修改
+- [x] 17. `on_damage_taken` 钩子 — Buff 修改伤害值
 
 ---
 
