@@ -4,5 +4,8 @@
 	},
 	"debug":{
 		"log_level": "debug"
+	},
+	"language":{
+		"locale": "zh_CN"
 	}
 }
