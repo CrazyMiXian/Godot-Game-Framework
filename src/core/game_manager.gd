@@ -15,7 +15,9 @@ func _ready() -> void:
 	# 创建内部暂停管理器（不暴露为 Autoload）
 	_pause_manager = PauseManager.new()
 	add_child(_pause_manager)
+	call_deferred("_initialize_all")
 
+func _initialize_all() -> void:
 	# 收集所有带 initialize() 方法的 Autoload 作为子系统
 	_collect_subsystems()
 
@@ -29,7 +31,6 @@ func _ready() -> void:
 	_is_initialized = true
 	LoggerGlobal.info("Framework initialization complete.", "GameManager")
 	emit_signal("framework_ready")
-
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
