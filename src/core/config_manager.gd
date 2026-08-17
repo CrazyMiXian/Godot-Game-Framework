@@ -47,6 +47,29 @@ func get_value(path:String, default = null):
 		current = current[key]
 	return current
 
+# 设置配置文件中的数据
+func set_value(path: String, value) -> void:
+	var keys := path.split(".")
+	var current = _config
+	for i in range(keys.size() - 1):
+		var key: String = keys[i]
+		if not current is Dictionary:
+			LoggerGlobal.warn("Config path is invalid - %s" % path, self.name)
+			return
+		if not current.has(key) or not current[key] is Dictionary:
+			current[key] = {}   # 自动创建中间层级
+		current = current[key]
+	current[keys[-1]] = value
+
+# 保存修改后的配置文件
+func save_config() -> void:
+	var file := FileAccess.open(CONFIG_PATH, FileAccess.WRITE)
+	if file == null:
+		LoggerGlobal.error("Failed to save config file - %s" % CONFIG_PATH, self.name)
+		return
+	file.store_string(JSON.stringify(_config, "\t"))
+	file.close()
+	LoggerGlobal.info("Successfully saved config file - %s" % CONFIG_PATH, self.name)
 
 # 无法找到配置文件时，使用默认配置
 func _default_config() -> Dictionary:
