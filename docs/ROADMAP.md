@@ -262,15 +262,15 @@ FSM Buff Ability
 >
 > **完成标志**：`SaveSystem.save(0, data)` → 重启 → `SaveSystem.load(0)` 数据一致。
 
-- [ ] 1. `class_name SaveSystem extends Node` — Autoload
-- [ ] 2. 多槽管理 — `save(slot, SaveData)` `load(slot)` `delete(slot)`
-- [ ] 3. `get_slots()` 返回槽列表 — 含元数据（时间、场景、玩家名）
-- [ ] 4. AES 加密 — `FileAccess.open_encrypted_with_pass`
-- [ ] 5. 版本号 + 迁移管线 — SaveData 带 version 字段
-- [ ] 6. `class_name SaveData extends Resource` — 存档数据结构
-- [ ] 7. `serialize()` / `deserialize(data)` — Dictionary 序列化
-- [ ] 8. 元数据独立存储为 `.json` — 快读槽列表不需解密
-- [ ] 9. 自动存档 — 定时器触发 + 事件触发
+- [x] 1. `class_name SaveSystem extends Node` — Autoload
+- [x] 2. 多槽管理 — `save(slot, SaveData)` `load(slot)` `delete(slot)`
+- [x] 3. `get_slots()` 返回槽列表 — 含元数据（时间、场景、玩家名）
+- [x] 4. AES 加密 — `FileAccess.open_encrypted_with_pass`
+- [x] 5. 版本号 + 迁移管线 — SaveData 带 version 字段
+- [x] 6. `class_name SaveData extends Resource` — 存档数据结构
+- [x] 7. `serialize()` / `deserialize(data)` — Dictionary 序列化
+- [x] 8. 元数据独立存储为 `.json` — 快读槽列表不需解密
+- [x] 9. 自动存档 — 定时器触发 + 事件触发
 
 ---
 
@@ -328,17 +328,17 @@ FSM Buff Ability
 >
 > **完成标志**：角色 idle↔walk↔attack 状态切换流畅，受伤 any→hurt。
 
-- [ ] 1. `class_name StateMachine extends Node` — 附加到实体上
-- [ ] 2. `create_state(name, enter, update, physics, exit)` — Callable 注入
-- [ ] 3. `add_transition(from, to, condition, priority)` — 条件转换，高优先级先检查
-- [ ] 4. `add_any_transition(to, condition, priority)` — 任意状态转入
-- [ ] 5. `start(initial_state)` — 设置初始状态并启动
-- [ ] 6. `revert_to_previous()` — 返回上一状态
-- [ ] 7. `state_changed` 信号 — 状态转换时发射
-- [ ] 8. `active` 开关 — 暂停/恢复状态机
-- [ ] 9. `class_name State extends RefCounted` — 状态对象
-- [ ] 10. `elapsed_time` — 进入该状态以来的时间
-- [ ] 11. 转换优先级排序 — 高优先级先检查
+- [x] 1. `class_name StateMachine extends Node` — 附加到实体上
+- [x] 2. `create_state(name, enter, update, physics, exit)` — Callable 注入
+- [x] 3. `add_transition(from, to, condition, priority)` — 条件转换，高优先级先检查
+- [x] 4. `add_any_transition(to, condition, priority)` — 任意状态转入
+- [x] 5. `start(initial_state)` — 设置初始状态并启动
+- [x] 6. `revert_to_previous()` — 返回上一状态
+- [x] 7. `state_changed` 信号 — 状态转换时发射
+- [x] 8. `active` 开关 — 暂停/恢复状态机
+- [x] 9. `class_name State extends RefCounted` — 状态对象
+- [x] 10. `elapsed_time` — 进入该状态以来的时间
+- [x] 11. 转换优先级排序 — 高优先级先检查
 
 ---
 
@@ -348,14 +348,14 @@ FSM Buff Ability
 >
 > **完成标志**：角色使用"火球术"技能 → 扣蓝 → 冷却 → 对敌人造成伤害并附加"燃烧"Buff（每 2 秒扣血）。
 
-- [ ] 1. `class_name Ability extends Resource` — 技能模板
-- [ ] 2. `ability_name` `icon` `cooldown` `cost` — 基础属性
-- [ ] 3. `target_type` 枚举 — SELF / SINGLE / AREA / DIRECTIONAL / PROJECTILE
-- [ ] 4. `can_use(caster)` — 检查冷却 + 资源
-- [ ] 5. `use(caster, target)` — 消耗资源 → 冷却计时 → 执行
-- [ ] 6. `get_cooldown_progress()` — 冷却进度 0-1（UI用）
-- [ ] 7. `class_name AbilityComponent extends Resource` — 可组合技能组件
-- [ ] 8. `CooldownComponent` `CostComponent` 等 — 即插即用
+- [x] 1. `class_name Ability extends Resource` — 技能模板
+- [x] 2. `ability_name` `icon` `cooldown` `cost` — 基础属性
+- [x] 3. `target_type` 枚举 — SELF / SINGLE / AREA / DIRECTIONAL / PROJECTILE
+- [x] 4. `can_use(caster)` — 检查冷却 + 资源
+- [x] 5. `use(caster, target)` — 消耗资源 → 冷却计时 → 执行
+- [x] 6. `get_cooldown_progress()` — 冷却进度 0-1（UI用）
+- [x] 7. `class_name AbilityComponent extends Resource` — 可组合技能组件
+- [x] 8. `CooldownComponent` `CostComponent` 等 — 即插即用
 - [x] 9. `class_name Buff extends Resource` — Buff 模板
 - [x] 10. `duration` `max_stacks` `stack_policy` — 叠加策略（刷新/叠加/拒绝/独立）
 - [x] 11. `attribute_modifiers` — 属性修改字典 `{"strength": {"flat":5, "multiplier":0.1}}`
