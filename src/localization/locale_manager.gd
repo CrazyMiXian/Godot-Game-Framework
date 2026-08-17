@@ -21,9 +21,7 @@ var supported_locales: Array[String] = ["zh_CN", "en_US"]
 func initialize() -> void:
 	# 从配置读取上次使用的语言
 	current_locale = ConfigManager.get_value("language.locale", "zh_CN")
-	LoggerGlobal.info("Loaded %s successfully" % current_locale, self.name)
 	_load_translations()
-
 
 func _load_translations() -> void:
 	var path := "res://src/localization/data/%s.csv" % current_locale
@@ -50,6 +48,8 @@ func _load_translations() -> void:
 			var key := parts[0].strip_edges()
 			var value := parts[1].strip_edges().replace("\\n", "\n")
 			_translations[key] = value
+			
+	LoggerGlobal.info("Loaded %s successfully" % current_locale, self.name)
 
 
 ## 翻译文本

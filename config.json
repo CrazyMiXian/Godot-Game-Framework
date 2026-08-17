@@ -2,10 +2,10 @@
 	"audio": {
 		"master_volume": 0.8
 	},
-	"debug":{
+	"debug": {
 		"log_level": "debug"
 	},
-	"language":{
-		"locale": "zh_CN"
+	"language": {
+		"locale": "en_US"
 	}
 }

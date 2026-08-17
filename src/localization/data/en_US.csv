@@ -1,0 +1,7 @@
+key,value
+ui.title,MyGame
+ui.confirm,Confirm
+ui.cancel,Cancel
+ui.back,Back
+game.you_got_item,You receieved {count} {item_name}
+combat.damage,Deal {amount} damage
