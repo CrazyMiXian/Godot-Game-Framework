@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bwd4s7w0fg4wm"]
 
 [ext_resource type="Script" uid="uid://bb66paf26r0vk" path="res://src/localization/locale_text.gd" id="1_ev4ex"]
+[ext_resource type="Script" uid="uid://b45qrihyanfq3" path="res://src/test/locale_test_button.gd" id="2_cg5qo"]
 
 [node name="Node" type="Node" unique_id=378320445]
 
@@ -44,5 +45,13 @@ offset_bottom = 23.0
 script = ExtResource("1_ev4ex")
 translation_key = "combat.damage"
 placeholders = {
-"amount": 10.0
+"amount": 0.0
 }
+
+[node name="Button" type="Button" parent="Control" unique_id=2044220959]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 529.0
+offset_right = 226.0
+offset_bottom = 599.0
+script = ExtResource("2_cg5qo")

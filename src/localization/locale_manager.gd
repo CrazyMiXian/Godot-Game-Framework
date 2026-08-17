@@ -41,6 +41,9 @@ func _load_translations() -> void:
 		var trimmed := line.strip_edges()
 		if trimmed.is_empty() or trimmed.begins_with("#"):
 			continue
+		# 跳过表头
+		if trimmed == "key,value":
+			continue
 
 		var parts := trimmed.split(",", true, 1)  # 只分割第一个逗号
 		if parts.size() >= 2:
@@ -51,7 +54,7 @@ func _load_translations() -> void:
 
 ## 翻译文本
 func tr_text(key: String, placeholder_values: Dictionary = {}) -> String:
-	var text : String = _translations.get(key, key)
+	var text : String = _translations.get(key, key) as String
 	for placeholder in placeholder_values:
 		text = text.replace("{%s}" % placeholder, str(placeholder_values[placeholder]))
 	return text
@@ -59,7 +62,7 @@ func tr_text(key: String, placeholder_values: Dictionary = {}) -> String:
 
 
 ## 全局快捷方法（在 gd_extensions.gd 中通过静态方法暴露）
-static func _gloable(key: String, values: Dictionary = {}) -> String:
+static func get_text(key: String, values: Dictionary = {}) -> String:
 	return (Engine.get_main_loop() as SceneTree).root.get_node_or_null("LocaleManager").tr_text(key, values)
 
 
