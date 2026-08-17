@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bwd4s7w0fg4wm"]
 
+[ext_resource type="Script" uid="uid://bb66paf26r0vk" path="res://src/localization/locale_text.gd" id="1_ev4ex"]
+
 [node name="Node" type="Node" unique_id=378320445]
 
 [node name="Node" type="Node" parent="." unique_id=230756425]
@@ -8,3 +10,39 @@
 position = Vector2(0, 98)
 
 [node name="Node3D" type="Node3D" parent="." unique_id=596260660]
+
+[node name="Control" type="Control" parent="." unique_id=659063787]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control" unique_id=75854949]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+
+[node name="Node" type="Node" parent="Control/Label" unique_id=482065367]
+script = ExtResource("1_ev4ex")
+translation_key = "ui.title"
+
+[node name="Label2" type="Label" parent="Control" unique_id=1490210144]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Node" type="Node" parent="Control/Label2" unique_id=1444307620]
+script = ExtResource("1_ev4ex")
+translation_key = "combat.damage"
+placeholders = {
+"amount": 10.0
+}
