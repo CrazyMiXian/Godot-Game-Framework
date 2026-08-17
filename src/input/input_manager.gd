@@ -16,6 +16,9 @@ class InputRecord:
 		
 func initialize() -> void:
 	_ensure_input_map()
+	
+func _process(delta: float) -> void:
+	_clean_history()
 		
 func _ensure_input_map() -> void:
 	# 确保框架默认的输入动作存在
@@ -93,11 +96,14 @@ func _record_input(action: String, pressed: bool) -> void:
 
 func _check_buffer(action: String, pressed: bool, buffer_frames: int) -> bool:
 	var current_frame := Engine.get_process_frames()
-	for record in _input_history:
+	for i in range(_input_history.size() - 1, -1, -1):
+		var record := _input_history[i]
 		if record.action == action and record.pressed == pressed:
 			if current_frame - record.frame <= buffer_frames:
 				_input_history.erase(record)
 				return true
+			else:
+				break
 	return false
 
 func _clean_history() -> void:
