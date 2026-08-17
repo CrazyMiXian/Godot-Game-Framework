@@ -1,0 +1,7 @@
+key,value
+ui.title,我的游戏
+ui.confirm,确认
+ui.cancel,取消
+ui.back,返回
+game.you_got_item,你获得了 {count} 个 {item_name}
+combat.damage,造成了 {amount} 点伤害
