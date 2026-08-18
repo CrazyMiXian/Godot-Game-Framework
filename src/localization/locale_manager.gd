@@ -4,6 +4,7 @@ extends Node
 signal locale_changed(new_locale: String)
 
 ## 当前语言
+
 var current_locale: String = "zh_CN":
 	set(v):
 		if current_locale != v:
@@ -20,8 +21,12 @@ var supported_locales: Array[String] = ["zh_CN", "en_US"]
 
 func initialize() -> void:
 	# 从配置读取上次使用的语言
-	current_locale = ConfigManager.get_value("language.locale", "zh_CN")
+	var saved = ConfigManager.get_value("language.locale", "zh_CN")
 	#_load_translations()
+	if saved not in supported_locales:
+		saved = "zh_CN"
+	current_locale = saved
+	TranslationServer.set_locale(saved)
 	locale_changed.emit(current_locale)
 
 '''

@@ -5,11 +5,11 @@ var _listeners: Dictionary = {}
 var _listener_id_counter: int = 0
 
 # 注册一个持久监听
-func on(event_name: String, callable: Callable) -> int:
+func on(event_name: String, callable: Callable = Callable()) -> int:
 	return _add_listener(event_name, callable, false)
 
 # 注册一个一次性监听
-func once(event_name: String, callable: Callable = ) -> int:
+func once(event_name: String, callable: Callable = Callable()) -> int:
 	return _add_listener(event_name, callable, true)
 
 # 关闭一个监听, 支持用ID或使用名称关闭
