@@ -8,7 +8,7 @@ var current_locale: String = "zh_CN":
 	set(v):
 		if current_locale != v:
 			current_locale = v
-			_load_translations()
+			TranslationServer.set_locale(v)
 			locale_changed.emit(v)
 
 ## 翻译数据 { "key": "翻译文本" }
@@ -21,8 +21,10 @@ var supported_locales: Array[String] = ["zh_CN", "en_US"]
 func initialize() -> void:
 	# 从配置读取上次使用的语言
 	current_locale = ConfigManager.get_value("language.locale", "zh_CN")
-	_load_translations()
+	#_load_translations()
+	locale_changed.emit(current_locale)
 
+'''
 func _load_translations() -> void:
 	var path := "res://src/localization/data/%s.csv" % current_locale
 	if not FileAccess.file_exists(path):
@@ -50,31 +52,34 @@ func _load_translations() -> void:
 			_translations[key] = value
 			
 	LoggerGlobal.info("Loaded %s successfully" % current_locale, self.name)
-
+'''
 
 ## 翻译文本
 func tr_text(key: String, placeholder_values: Dictionary = {}) -> String:
-	var text : String = _translations.get(key, key) as String
-	for placeholder in placeholder_values:
-		text = text.replace("{%s}" % placeholder, str(placeholder_values[placeholder]))
+	var text := tr(key)
+	if not placeholder_values.is_empty():
+		text = text.format(placeholder_values)
 	return text
 
 
 
 ## 全局快捷方法（在 gd_extensions.gd 中通过静态方法暴露）
 static func get_text(key: String, values: Dictionary = {}) -> String:
-	return (Engine.get_main_loop() as SceneTree).root.get_node_or_null("LocaleManager").tr_text(key, values)
+	var text := TranslationServer.translate(key)
+	if not values.is_empty():
+		text = text.format(values)
+	return text
 
 
-# **翻译 CSV 格式** (`zh_CN.csv`)：
+# **翻译 CSV 格式** ：
 
 '''csv
-# 中文翻译表
-key,value
-ui.title,我的游戏
-ui.confirm,确认
-ui.cancel,取消
-ui.back,返回
-game.you_got_item,你获得了 {count} 个 {item_name}
-combat.damage,造成了 {amount} 点伤害
+keys,en_US,zh_CN
+ui.title,MyGame,我的游戏
+ui.confirm,Confirm,确认
+ui.cancel,Cancel,取消
+ui.back,Back,返回
+game.you_got_item,You received {count} {item_name},你获得了 {count} 个 {item_name}
+combat.damage,Deal {amount} damage,造成了 {amount} 点伤害
+
 '''

@@ -1,0 +1,7 @@
+keys,en_US,zh_CN
+ui.title,MyGame,我的游戏
+ui.confirm,Confirm,确认
+ui.cancel,Cancel,取消
+ui.back,Back,返回
+game.you_got_item,You received {count} {item_name},你获得了 {count} 个 {item_name}
+combat.damage,Deal {amount} damage,造成了 {amount} 点伤害

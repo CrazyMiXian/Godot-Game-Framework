@@ -32,6 +32,10 @@ LocaleManager="*uid://gfs1svfkrbt8"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://src/localization/data/translations.zh_CN.translation", "res://src/localization/data/translations.en_US.translation")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
