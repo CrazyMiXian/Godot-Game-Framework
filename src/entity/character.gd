@@ -28,12 +28,16 @@ var current_health: float = 100.0:
 
 # Buff 容器
 var buff_container: BuffContainer
+var current_ability: Ability
 
 func _ready() -> void:
 	super._ready()
 	current_health = max_health
 	buff_container = BuffContainer.new(self); add_child(buff_container)
 
+func _process(delta: float) -> void:
+	if current_ability:
+		current_ability.tick(delta)
 
 func _calculate_damage(amount: float, source: Entity) -> float:
 	# 应用属性加成的伤害计算

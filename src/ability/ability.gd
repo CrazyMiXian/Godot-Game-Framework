@@ -56,15 +56,17 @@ func use(caster: Character, target = null) -> void:
 	_cooldown_remaining = cooldown
 
 	# 执行技能逻辑
-	await _execute(caster, target)
+	_execute(caster, target)
 
-	# 冷却计时
-	while _cooldown_remaining > 0:
-		await caster.get_tree().process_frame
-		_cooldown_remaining -= caster.get_process_delta_time()
 
-	_on_cooldown = false
-
+## 每帧由持有者（Character / 技能系统）驱动
+func tick(delta: float) -> void:
+	if not _on_cooldown:
+		return
+	_cooldown_remaining -= delta
+	if _cooldown_remaining <= 0.0:
+		_cooldown_remaining = 0.0
+		_on_cooldown = false
 
 ## 子类重写：技能执行逻辑
 func _execute(caster: Character, target) -> void:

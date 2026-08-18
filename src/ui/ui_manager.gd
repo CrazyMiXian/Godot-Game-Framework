@@ -49,7 +49,7 @@ func close_top() -> void:
 ## 关闭到指定面板
 func close_to(panel: UIPanel) -> void:
 	while not _panel_stack.is_empty() and _panel_stack.back() != panel:
-		close_top()
+		await close_top()
 
 
 ## 显示弹窗（链式 API）
