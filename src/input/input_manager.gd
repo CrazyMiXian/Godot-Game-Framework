@@ -60,7 +60,7 @@ func _ensure_input_map() -> void:
 func is_action_just_pressed(action: String, buffer_frames: int = 0) -> bool:
 	if Input.is_action_just_pressed(action):
 		_record_input(action, true)
-		print(action)
+		#print(action)
 		return true
 	if buffer_frames > 0:
 		return _check_buffer(action, true, buffer_frames)

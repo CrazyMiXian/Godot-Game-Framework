@@ -18,7 +18,7 @@ const LAYER_PRIORITY: Dictionary = {
 }
 
 var _pause_stack: Array[StringName] = []
-var _base_process_mode: Node.ProcessMode = Node.PROCESS_MODE_INHERIT
+#var _base_process_mode: Node.ProcessMode = Node.PROCESS_MODE_INHERIT
 
 
 func push_pause(layer: StringName = &"GAMEPLAY") -> void:
@@ -62,8 +62,8 @@ func _apply_pause() -> void:
 	if _pause_stack.is_empty():
 		# 栈空 → 恢复运行
 		get_tree().paused = false
-		process_mode = _base_process_mode
+		#process_mode = _base_process_mode
 	else:
 		# 栈非空 → 暂停游戏树，自身保持 PROCESS_MODE_ALWAYS 以响应 unpause
 		get_tree().paused = true
-		process_mode = Node.PROCESS_MODE_ALWAYS
+		#process_mode = Node.PROCESS_MODE_ALWAYS

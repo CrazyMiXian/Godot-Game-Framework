@@ -9,11 +9,11 @@ func on(event_name: String, callable: Callable) -> int:
 	return _add_listener(event_name, callable, false)
 
 # 注册一个一次性监听
-func once(event_name: String, callable: Callable) -> int:
+func once(event_name: String, callable: Callable = ) -> int:
 	return _add_listener(event_name, callable, true)
 
 # 关闭一个监听, 支持用ID或使用名称关闭
-func off(event_or_id, callable: Callable) -> void:
+func off(event_or_id, callable: Callable = Callable()) -> void:
 	if event_or_id is int:
 		_off_by_id(event_or_id)
 	elif event_or_id is String and callable.is_valid():

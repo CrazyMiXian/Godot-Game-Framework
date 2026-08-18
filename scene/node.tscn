@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bb66paf26r0vk" path="res://src/localization/locale_text.gd" id="1_ev4ex"]
 [ext_resource type="Script" uid="uid://b45qrihyanfq3" path="res://src/test/locale_test_button.gd" id="2_cg5qo"]
 [ext_resource type="Script" uid="uid://djyscssjlqy1a" path="res://src/test/locale_test_button_2.gd" id="3_ogj85"]
+[ext_resource type="Script" uid="uid://wqlgynjqun0t" path="res://src/test/locale_test_button_3.gd" id="4_4dvd5"]
 
 [node name="Node" type="Node" unique_id=378320445]
 
@@ -63,5 +64,14 @@ offset_left = 316.0
 offset_top = 528.0
 offset_right = 524.0
 offset_bottom = 602.0
-text = "翻译变化"
+text = "English"
 script = ExtResource("3_ogj85")
+
+[node name="Button3" type="Button" parent="Control" unique_id=943152857]
+layout_mode = 0
+offset_left = 591.0
+offset_top = 525.0
+offset_right = 707.0
+offset_bottom = 594.0
+text = "中文"
+script = ExtResource("4_4dvd5")

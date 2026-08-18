@@ -1,7 +1,7 @@
 extends Node
 
 var _config : Dictionary = {}
-const CONFIG_PATH := "res://config.json"
+const CONFIG_PATH := "user://config.json"
 
 #func _ready() -> void:
 #	initialize()

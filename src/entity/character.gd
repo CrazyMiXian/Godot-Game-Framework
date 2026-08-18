@@ -32,7 +32,7 @@ var buff_container: BuffContainer
 func _ready() -> void:
 	super._ready()
 	current_health = max_health
-	buff_container = BuffContainer.new(self)
+	buff_container = BuffContainer.new(self); add_child(buff_container)
 
 
 func _calculate_damage(amount: float, source: Entity) -> float:
