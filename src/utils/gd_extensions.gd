@@ -1,4 +1,4 @@
-class_name GDExtentions
+class_name GDExtenstions
 extends RefCounted
 
 ## 为数组增加扩展方法（通过静态方法实现，因为 GDScript 不支持直接扩展）
