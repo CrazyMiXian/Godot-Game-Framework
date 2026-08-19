@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://coovyapm7emhm"]
+
+[ext_resource type="PackedScene" uid="uid://ddm5mfna4p8w2" path="res://scene/character.tscn" id="1_itxqv"]
+
+[node name="Main" type="Node" unique_id=607048968]
+
+[node name="CharacterBody2D" parent="." unique_id=1863922263 instance=ExtResource("1_itxqv")]
+position = Vector2(532, 286)
+move_speed = 600.0
