@@ -2,9 +2,10 @@ class_name BuffContainer
 extends Node
 
 var _buffs: Array[Buff] = []
+var host: Character
 
-func _init(p_owner: Character):
-	owner = p_owner
+func _init(p_host: Character):
+	host = p_host
 
 
 func _process(delta: float) -> void:
@@ -35,7 +36,7 @@ func apply_buff(buff_template: Buff, source_id: String = "") -> Buff:
 	new_buff.source_id = source_id
 	new_buff.container = self
 
-	var owner_char := owner as Character
+	var owner_char := host as Character
 	if owner_char:
 		new_buff.on_apply(owner_char)
 
