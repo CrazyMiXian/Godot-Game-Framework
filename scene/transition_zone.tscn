@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://cvvyapdovc2bh"]
 
+[ext_resource type="Script" uid="uid://hn0qgkpki0jf" path="res://src/scene/room_door.gd" id="1_wv4dl"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wahsw"]
 size = Vector2(20, 12)
 
-[node name="TransitionZone" type="Node2D" unique_id=49007130]
+[node name="TransitionZone" type="Area2D" unique_id=737496408]
+script = ExtResource("1_wv4dl")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=84691470]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=62516531]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=62516531]
 shape = SubResource("RectangleShape2D_wahsw")

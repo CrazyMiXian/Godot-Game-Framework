@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://coovyapm7emhm"]
 
 [ext_resource type="PackedScene" uid="uid://ddm5mfna4p8w2" path="res://scene/character.tscn" id="1_itxqv"]
+[ext_resource type="Script" uid="uid://bb2tvb8p0rn1t" path="res://scene/main.gd" id="1_wp4xf"]
 
 [node name="Main" type="Node" unique_id=607048968]
+script = ExtResource("1_wp4xf")
 
-[node name="CharacterBody2D" parent="." unique_id=1863922263 instance=ExtResource("1_itxqv")]
+[node name="Player" parent="." unique_id=1863922263 instance=ExtResource("1_itxqv")]
 position = Vector2(532, 286)
 move_speed = 600.0
+
+[node name="RoomHost" type="Node2D" parent="." unique_id=172347266]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddm5mfna4p8w2"]
 
 [ext_resource type="Texture2D" uid="uid://bv2f24lk4nyma" path="res://icon.svg" id="1_3x35j"]
-[ext_resource type="Script" uid="uid://cgst7e3kdxa17" path="res://src/entity/player.gd" id="1_6k5wm"]
+[ext_resource type="Script" uid="uid://cgst7e3kdxa17" path="res://game/entities/player/player.gd" id="1_6k5wm"]
 [ext_resource type="Script" uid="uid://yqucyk5sb8gt" path="res://src/entity/character.gd" id="2_k8rrn"]
 [ext_resource type="Script" uid="uid://f8bs5qctl4c4" path="res://src/entity/attribute_container.gd" id="3_d7vt2"]
 
@@ -15,7 +15,7 @@ base = {
 }
 metadata/_custom_type_script = "uid://f8bs5qctl4c4"
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1863922263]
+[node name="Player" type="CharacterBody2D" unique_id=1863922263 groups=["player"]]
 script = ExtResource("1_6k5wm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1115788124]

@@ -26,7 +26,7 @@ func initialize() -> void:
 # 创建过渡效果: 在根节点通过预设画面创建一个名为"SceneTransition"的场景包
 func _create_transition_layer() -> void:
 	LoggerGlobal.info("Create loading scene", self.name)
-	var transition_scene := load("res://scene/scene_transition.tscn") as PackedScene
+	var transition_scene := load("res://src/scene/scene_transition.tscn") as PackedScene
 	var transition := transition_scene.instantiate()
 	# 在加入根节点前就设置
 	transition.name = "SceneTransition"
@@ -113,7 +113,7 @@ func _change_scene_internal(path: String, data: Dictionary, transition_type: Tra
 	scene_changed.emit(path)
 
 	await _play_transition(transition_type, false)
-	LoggerGlobal.info("Scene loaded successfully", self.name)
+	LoggerGlobal.info("Scene loaded successfully - %s" % path, self.name)
 
 func _play_transition(transition_type: TransitionType, is_out: bool) -> void:
 	if transition_type == TransitionType.NONE:
