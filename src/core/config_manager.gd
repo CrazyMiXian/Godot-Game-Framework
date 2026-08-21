@@ -20,8 +20,9 @@ func load_config() -> void:
 	# 有配置文件但是无法读取则报错
 	var file := FileAccess.open(CONFIG_PATH, FileAccess.READ)
 	if file == null:
-		LoggerGlobal.error("Failed to load config file - %s" % CONFIG_PATH, self.name)
+		LoggerGlobal.warn("Config file - %s is not exist, creating default config." % CONFIG_PATH, self.name)
 		_config = _default_config()
+		save_config()
 		return
 	
 	var text := file.get_as_text()
